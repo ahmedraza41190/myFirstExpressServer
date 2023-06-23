@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="shortcut icon" href="https://openweathermap.org/img/wn/04n.png">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: #222;
+            background-image: url('https://source.unsplash.com/1600x900/?landscape');
+            font-size: 120%;
+        }
+
+        .card {
+            background: #000000d0;
+            color: white;
+            padding: 2em;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 420px;
+            margin: 1em;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            margin: 0.5em;
+            border-radius: 50%;
+            border: none;
+            height: 64px;
+            width: 64px;
+            outline: none;
+            background: #7c7c7c2b;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+        #cityName{
+            border: none;
+            outline: none;
+            padding: 0.4em 1em;
+            border-radius: 24px;
+            background: #7c7c7c2b;
+            color: white;
+            font-family: inherit;
+            font-size: 105%;
+            width: calc(100% - 100px);
+        }
+
+        button:hover {
+            background: #7c7c7c6b;
+        }
+
+      
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="search">
+            <form style="display: flex;" onsubmit="getWeather(); return false">
+
+                
+
+                <label for="cityName"></label>
+                <input type="text" name="cityName" id="cityName" placeholder="enter your city name">
+        
+               
+        
+                <button type="submit">Get Weather</button>
+            </form>
+
+        </div>
+
+        <br>
+
+        <div id="result"></div>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script type="module">
+
+            let name = "alice"
+
+            window.getWeather = function () {
+
+                let cityName = document.querySelector("#cityName").value;
+
+                axios.get(`/weather/${cityName}`)
+                    .then(function (response) {
+                        // handle success
+                        console.log(response.data);
+                        // {
+                        //     city: 'Beijing',
+                        //     tempInC: 30,
+                        //     humidity: 56,
+                        //     high: 32,
+                        //     low: 18
+                        // }
+
+                        document.querySelector("#result").innerHTML =
+                            `current temperature is ${response.data.tempInC}°C`
+
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error.data);
+                        document.querySelector("#result").innerHTML = "error in getting weather data"
+                    })
+
+
+
+            }
+
+        </script>
+
+</body>
+
+</html>
